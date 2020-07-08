@@ -27,4 +27,19 @@ abstract class BrowserAction < Lucky::Action
   private def find_current_user(id) : User?
     UserQuery.new.id(id).first?
   end
+
+  after store_breeze
+
+  def store_breeze : Continue
+    req = BreezeRequest::SaveOperation.create!(
+      path: request.resource,
+      method: request.method,
+      action: self.class.name,
+      status: response.status_code,
+      session: JSON.parse(session.to_json),
+      headers: JSON.parse(request.headers.to_h.to_json)
+    )
+    Lucky.logger.debug(debug_at: Breeze::Requests::Show.url(req.id))
+    continue
+  end
 end

@@ -8,17 +8,10 @@ abstract class MainLayout
   abstract def content
   abstract def page_title
 
-  # MainLayout defines a default 'page_title'.
+  # The default page title. It is passed to `Shared::LayoutHead`.
   #
-  # Add a 'page_title' method to your indivual pages to customize each page's
-  # title.
-  #
-  # Or, if you want to require every page to set a title, change the
-  # 'page_title' method in this layout to:
-  #
-  #    abstract def page_title : String
-  #
-  # This will force pages to define their own 'page_title' method.
+  # Add a `page_title` method to pages to override it. You can also remove
+  # This method so every page is required to have its own page title.
   def page_title
     "Welcome"
   end
@@ -27,10 +20,10 @@ abstract class MainLayout
     html_doctype
 
     html lang: "en" do
-      m Shared::LayoutHead, page_title: page_title, context: context
+      mount Shared::LayoutHead.new(page_title: page_title, context: @context)
 
       body do
-        m Shared::FlashMessages, context.flash
+        mount Shared::FlashMessages.new(@context.flash)
         render_signed_in_user
         content
       end
@@ -38,7 +31,7 @@ abstract class MainLayout
   end
 
   private def render_signed_in_user
-    text current_user.email
+    text @current_user.email
     text " - "
     link "Sign out", to: SignIns::Delete, flow_id: "sign-out-button"
   end
