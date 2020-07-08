@@ -1,5 +1,6 @@
 abstract class BrowserAction < Lucky::Action
   include Lucky::ProtectFromForgery
+  include Lucky::Paginator::BackendHelpers
   accepted_formats [:html, :json], default: :html
 
   # This module provides current_user, sign_in, and sign_out methods
@@ -39,7 +40,7 @@ abstract class BrowserAction < Lucky::Action
       session: JSON.parse(session.to_json),
       headers: JSON.parse(request.headers.to_h.to_json)
     )
-    Lucky.logger.debug(debug_at: Breeze::Requests::Show.url(req.id))
+    # Lucky.logger.debug(debug_at: Breeze::Requests::Show.url(req.id))
     continue
   end
 end
