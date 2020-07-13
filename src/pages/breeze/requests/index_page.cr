@@ -11,14 +11,14 @@ class Breeze::Requests::IndexPage < BreezeLayout
   end
 
   def render_table
-    mount Breeze::Panel.new do
+    m Breeze::Panel do
       ul class: "-mt-px" do
         @breeze_requests.each do |req|
           request_row(req)
         end
       end
 
-      mount Breeze::PageNav.new(@pages)
+      m Breeze::PageNav, @pages
     end
   end
 
@@ -28,7 +28,7 @@ class Breeze::Requests::IndexPage < BreezeLayout
         div class: "flex items-center px-4 py-4 sm:px-4" do
           div class: "min-w-0 flex-1 flex items-center" do
             div class: "min-w-0 flex-1 px-4 md:grid md:grid-cols-3 md:gap-4" do
-              div { mount Breeze::Badge.new(req) }
+              div { m Breeze::Badge, req }
               div class: "hidden md:block" do
                 div req.action, class: "text-sm leading-5 text-indigo-700 truncate"
               end
@@ -40,7 +40,7 @@ class Breeze::Requests::IndexPage < BreezeLayout
             end
           end
           div do
-            mount ArrowSvg.new
+            m ArrowSvg
           end
         end
       end

@@ -5,7 +5,7 @@ class Breeze::DescriptionList < BaseComponent
   needs list : HtmlProc
 
   def render
-    mount Breeze::Panel.new do
+    m Breeze::Panel do
       render_main_heading
       render_list
     end
