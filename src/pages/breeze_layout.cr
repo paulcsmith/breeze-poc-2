@@ -56,7 +56,7 @@ abstract class BreezeLayout
       end
       main class: "-mt-32" do
         div class: "max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8" do
-          div class: "bg-white rounded-lg shadow overflow-hidden" do
+          div class: "bg-white rounded-lg shadow-lg overflow-hidden" do
             m Shared::FlashMessages, @context.flash
             content
           end
