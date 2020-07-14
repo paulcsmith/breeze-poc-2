@@ -14,7 +14,7 @@ abstract class BreezeLayout
     html lang: "en" do
       m Breeze::LayoutHead, page_title: page_title, context: @context
 
-      body do
+      body class: "bg-gray-100" do
         tailwind_stacked
       end
     end
