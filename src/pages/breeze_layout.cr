@@ -30,11 +30,7 @@ abstract class BreezeLayout
                 div class: "flex items-center" do
                   div class: "hidden md:block" do
                     div class: "flex items-baseline" do
-                      a "Dashboard", class: "px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700", href: "#"
-                      a "Team", class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700", href: "#"
-                      a "Projects", class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700", href: "#"
-                      a "Calendar", class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700", href: "#"
-                      a "Reports", class: "ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700", href: "#"
+                      m Breeze::SidebarLinks
                     end
                   end
                 end

@@ -26,12 +26,7 @@ class Breeze::SmallSidebar < BaseComponent
     # end
     div x_show: "sidebarOpen", class: "border-b border-gray-700 md:hidden" do
       div class: "px-2 py-3 sm:px-3" do
-        a "Dashboard", class: "block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700", href: "#"
-        a "Team", class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700", href: "#"
-        a "Projects", class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700", href: "#"
-        a "Calendar", class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700", href: "#"
-        a "Reports", class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700", href: "#"
-        # m Breeze::SidebarLinks
+        m Breeze::SidebarLinks
       end
     end
   end
