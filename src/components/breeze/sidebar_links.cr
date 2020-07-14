@@ -1,7 +1,7 @@
 class Breeze::SidebarLinks < BaseComponent
   def render
     link "Requests", to: Breeze::Requests::Index, class: "#{link_class} #{link_active_class}"
-    a "Emails", href: "#", class: "#{link_class} #{link_inactive_class}"
+    link "Queries", to: Breeze::Queries::Index, class: "#{link_class} #{link_inactive_class}"
   end
 
   def link_class
