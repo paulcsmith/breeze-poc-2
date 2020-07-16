@@ -7,8 +7,8 @@ if Lucky::Env.development?
   Avram::SchemaEnforcer.ensure_correct_column_mappings!
 end
 
-AvramQueryEvent.subscribe ->(event : AvramQueryEvent) do
-  SaveBreezeSqlStatement.create!(statement: event.query)
+Avram::QueryEvent.subscribe ->(event : Avram::QueryEvent) do
+  SaveBreezeSqlStatement.create!(statement: event.query, args: event.args)
 end
 
 app_server = AppServer.new

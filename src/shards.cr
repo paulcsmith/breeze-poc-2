@@ -24,10 +24,10 @@ abstract class Pulsar::Event
   abstract def name : String
 end
 
-class AvramQueryEvent < Pulsar::Event
-  property :query
+class Avram::QueryEvent < Pulsar::Event
+  property :query, :args
 
-  def initialize(@query : String)
+  def initialize(@query : String, @args : String?)
   end
 
   def name : String
@@ -35,8 +35,19 @@ class AvramQueryEvent < Pulsar::Event
   end
 end
 
-AvramQueryEvent.subscribe ->(event : AvramQueryEvent) { puts event.inspect }
-AvramQueryEvent.new(query: "foo").publish
+class Lucky::RequestStartedEvent < Pulsar::Event
+  property :request
+
+  def initialize(@request : HTTP::Server::Request)
+  end
+
+  def name : String
+    "lucky.request.started"
+  end
+end
+
+class Lucky::Requst
+end
 
 # Require your shards here
 require "avram"
