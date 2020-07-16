@@ -3,10 +3,11 @@ require "dotenv"
 Dotenv.load?
 
 abstract class Pulsar::Event
-  getter :created_at
+  getter :started_at
 
   macro inherited
-    @created_at = Time.utc
+    @started_at : Time = Time.utc
+    @finished_at  : Time?
     class_property subscribers = [] of Proc(self, Nil)
   end
 

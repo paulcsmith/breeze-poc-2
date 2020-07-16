@@ -7,6 +7,10 @@ if Lucky::Env.development?
   Avram::SchemaEnforcer.ensure_correct_column_mappings!
 end
 
+AvramQueryEvent.subscribe ->(event : AvramQueryEvent) do
+  SaveBreezeSqlStatement.create!(statement: event.query)
+end
+
 app_server = AppServer.new
 
 Signal::INT.trap do
