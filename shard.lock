@@ -80,6 +80,10 @@ shards:
     git: https://github.com/will/crystal-pg.git
     version: 0.21.1
 
+  pulsar:
+    git: https://github.com/luckyframework/pulsar.git
+    version: 0.1.0
+
   selenium:
     git: https://github.com/matthewmcgarvey/selenium.cr.git
     version: 0.6.0
