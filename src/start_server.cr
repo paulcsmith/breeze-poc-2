@@ -8,7 +8,9 @@ if Lucky::Env.development?
 end
 
 Avram::QueryEvent.subscribe do |event|
-  SaveBreezeSqlStatement.create!(statement: event.query, args: event.args)
+  spawn do
+    SaveBreezeSqlStatement.create!(statement: event.query, args: event.args)
+  end
 end
 
 app_server = AppServer.new
