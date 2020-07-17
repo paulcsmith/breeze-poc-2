@@ -6,6 +6,7 @@ class CreateBreezeSqlStatements::V20200714004133 < Avram::Migrator::Migration::V
       add_timestamps
       add statement : String
       add args : String?
+      add_belongs_to breeze_request : BreezeRequest?, on_delete: :nullify
     end
   end
 
