@@ -24,11 +24,11 @@ class Breeze::Queries::IndexPage < BreezeLayout
 
   def query_row(query)
     li do
-      link Queries::Show.with(query.id), class: "block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out" do
+      link Queries::Show.with(query.id), class: "block hover:bg-indigo-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out" do
         div class: "flex items-center px-4 py-4 sm:px-4" do
           div class: "min-w-0 flex-1 flex items-center" do
             div class: "min-w-0 flex-1 px-4 md:grid md:grid-cols-3 md:gap-6" do
-              div query.statement, class: "text-sm leading-5 col-span-2 text-indigo-700 truncate"
+              div query.statement, class: "font-mono text-sm leading-5 col-span-2 text-indigo-700 truncate"
               div class: "hidden sm:block ml-7" do
                 div class: "text-sm leading-5 text-gray-500" do
                   text "#{time_ago_in_words(query.created_at)} ago"
