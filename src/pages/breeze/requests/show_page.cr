@@ -15,19 +15,30 @@ class Breeze::Requests::ShowPage < BreezeLayout
   end
 
   def content
+    div class: "w-2/3" do
+      m Breeze::Panel do
+        m Breeze::DescriptionList,
+          heading_title: ->{ m Breeze::Badge, req, large: true },
+          list: ->{
+            m Breeze::DescriptionListRow, "Action", req.action
+            req.breeze_response.try do |resp|
+              m Breeze::DescriptionListRow, "Status", resp.status.to_s
+            end
+          }
+      end
+    end
+
     m Breeze::Panel do
       m Breeze::DescriptionList,
         heading_title: ->{ text req.action },
-        heading_subtitle: ->{ m Breeze::Badge, req },
         list: ->{
-          req.breeze_response.try do |resp|
-            m Breeze::DescriptionListRow, "Status", resp.status.to_s
-          end
           m Breeze::DescriptionListRow, "Body", req.body || "No body"
           render_session_info
           render_header_info
         }
+    end
 
+    m Breeze::Panel do
       m Breeze::DescriptionList,
         heading_title: ->{ text "Queries" },
         list: ->{
@@ -35,7 +46,9 @@ class Breeze::Requests::ShowPage < BreezeLayout
             m Breeze::DescriptionListRow, "Foo", query.statement
           end
         }
+    end
 
+    m Breeze::Panel do
       m Breeze::DescriptionList,
         heading_title: ->{ text "Pipes" },
         list: ->{

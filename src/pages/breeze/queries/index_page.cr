@@ -7,9 +7,7 @@ class Breeze::Queries::IndexPage < BreezeLayout
   end
 
   def content
-    m Breeze::Panel do
-      render_table
-    end
+    render_table
   end
 
   def render_table
