@@ -22,32 +22,29 @@ abstract class BreezeLayout
 
   def tailwind_stacked
     div "@keydown.window.escape": "sidebarOpen = false", x_data: "{ sidebarOpen: false }" do
-      div class: "bg-gray-800 pb-32 pt-5" do
-        nav class: "bg-gray-800" do
-          div class: "max-w-7xl mx-auto sm:px-6 lg:px-8" do
-            div class: "flex items-center justify-between h-16 px-4 sm:px-0" do
-              div class: "flex items-center" do
-                div class: "hidden md:block" do
-                  div class: "flex items-baseline" do
-                    m Breeze::SidebarLinks, context: context
-                  end
+      nav class: "bg-gray-800 pb-32 pt-5 mb-5" do
+        div class: "max-w-7xl mx-auto sm:px-6 lg:px-8" do
+          div class: "flex items-center justify-between h-16 px-4 sm:px-0" do
+            div class: "flex items-center" do
+              div class: "hidden md:block" do
+                div class: "flex items-baseline" do
+                  m Breeze::SidebarLinks, context: context
                 end
-                hamburger_menu
               end
-
-              lucky_logo
+              hamburger_menu
             end
-          end
 
-          m Breeze::SmallSidebar, context: context
+            lucky_logo
+          end
         end
+
+        m Breeze::SmallSidebar, context: context
       end
+
       main class: "-mt-32" do
         div class: "max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8" do
-          div class: "mt-7 bg-white rounded-lg shadow-lg overflow-hidden" do
-            m Shared::FlashMessages, @context.flash
-            content
-          end
+          m Shared::FlashMessages, @context.flash
+          content
         end
       end
     end

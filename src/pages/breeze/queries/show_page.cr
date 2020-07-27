@@ -6,11 +6,13 @@ class Breeze::Queries::ShowPage < BreezeLayout
   end
 
   def content
-    m Breeze::DescriptionList,
-      heading_title: ->{ text "Query details" },
-      list: ->{
-        m Breeze::DescriptionListRow, "Statement", breeze_sql_statement.statement
-        m Breeze::DescriptionListRow, "Args", breeze_sql_statement.args || "[]"
-      }
+    m Breeze::Panel do
+      m Breeze::DescriptionList,
+        heading_title: ->{ text "Query details" },
+        list: ->{
+          m Breeze::DescriptionListRow, "Statement", breeze_sql_statement.statement
+          m Breeze::DescriptionListRow, "Args", breeze_sql_statement.args || "[]"
+        }
+    end
   end
 end

@@ -15,33 +15,35 @@ class Breeze::Requests::ShowPage < BreezeLayout
   end
 
   def content
-    m Breeze::DescriptionList,
-      heading_title: ->{ text req.action },
-      heading_subtitle: ->{ m Breeze::Badge, req },
-      list: ->{
-        req.breeze_response.try do |resp|
-          m Breeze::DescriptionListRow, "Status", resp.status.to_s
-        end
-        m Breeze::DescriptionListRow, "Body", req.body || "No body"
-        render_session_info
-        render_header_info
-      }
+    m Breeze::Panel do
+      m Breeze::DescriptionList,
+        heading_title: ->{ text req.action },
+        heading_subtitle: ->{ m Breeze::Badge, req },
+        list: ->{
+          req.breeze_response.try do |resp|
+            m Breeze::DescriptionListRow, "Status", resp.status.to_s
+          end
+          m Breeze::DescriptionListRow, "Body", req.body || "No body"
+          render_session_info
+          render_header_info
+        }
 
-    m Breeze::DescriptionList,
-      heading_title: ->{ text "Queries" },
-      list: ->{
-        req.breeze_sql_statements.each do |query|
-          m Breeze::DescriptionListRow, "Foo", query.statement
-        end
-      }
+      m Breeze::DescriptionList,
+        heading_title: ->{ text "Queries" },
+        list: ->{
+          req.breeze_sql_statements.each do |query|
+            m Breeze::DescriptionListRow, "Foo", query.statement
+          end
+        }
 
-    m Breeze::DescriptionList,
-      heading_title: ->{ text "Pipes" },
-      list: ->{
-        req.breeze_pipes.each do |pipe|
-          m Breeze::DescriptionListRow, "Foo", pipe.name
-        end
-      }
+      m Breeze::DescriptionList,
+        heading_title: ->{ text "Pipes" },
+        list: ->{
+          req.breeze_pipes.each do |pipe|
+            m Breeze::DescriptionListRow, "Foo", pipe.name
+          end
+        }
+    end
   end
 
   def render_session_info
