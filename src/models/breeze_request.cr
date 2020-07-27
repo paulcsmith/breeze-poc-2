@@ -8,6 +8,7 @@ class BreezeRequest < BaseModel
     column headers : JSON::Any
     has_one breeze_response : BreezeResponse?
     has_many breeze_sql_statements : BreezeSqlStatement
+    has_many breeze_pipes : BreezePipe
   end
 
   def method : String

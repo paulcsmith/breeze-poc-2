@@ -34,6 +34,14 @@ class Breeze::Requests::ShowPage < BreezeLayout
           m Breeze::DescriptionListRow, "Foo", query.statement
         end
       }
+
+    m Breeze::DescriptionList,
+      heading_title: ->{ text "Pipes" },
+      list: ->{
+        req.breeze_pipes.each do |pipe|
+          m Breeze::DescriptionListRow, "Foo", pipe.name
+        end
+      }
   end
 
   def render_session_info

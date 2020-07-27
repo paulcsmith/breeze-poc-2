@@ -3,6 +3,7 @@ class Fiber
 end
 
 abstract class BrowserAction < Lucky::Action
+  before store_breeze_request
   include Lucky::ProtectFromForgery
   include Lucky::Paginator::BackendHelpers
   accepted_formats [:html, :json], default: :html
@@ -32,8 +33,6 @@ abstract class BrowserAction < Lucky::Action
   private def find_current_user(id) : User?
     UserQuery.new.id(id).first?
   end
-
-  before store_breeze_request
 
   def store_breeze_request : Continue
     req = BreezeRequest::SaveOperation.create!(

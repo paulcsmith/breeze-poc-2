@@ -1,4 +1,4 @@
-class CreateBreezeRequests::V2 < Avram::Migrator::Migration::V1
+class CreateBreezeTables::V2 < Avram::Migrator::Migration::V1
   def migrate
     # Learn about migrations at: https://luckyframework.org/guides/database/migrations
     create table_for(BreezeRequest) do
