@@ -10,10 +10,12 @@ end
 Avram::QueryEvent.subscribe do |event|
   req = Fiber.current.breeze_request
   spawn do
-    SaveBreezeSqlStatement.create! \
-      breeze_request_id: req.try(&.id),
-      statement: event.query,
-      args: event.args
+    unless event.query.includes?("FROM breeze_")
+      SaveBreezeSqlStatement.create! \
+        breeze_request_id: req.try(&.id),
+        statement: event.query,
+        args: event.args
+    end
   end
 end
 
