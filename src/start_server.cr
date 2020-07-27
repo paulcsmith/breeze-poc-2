@@ -8,8 +8,12 @@ if Lucky::Env.development?
 end
 
 Avram::QueryEvent.subscribe do |event|
+  req = Fiber.current.breeze_request
   spawn do
-    SaveBreezeSqlStatement.create!(statement: event.query, args: event.args)
+    SaveBreezeSqlStatement.create! \
+      breeze_request_id: req.try(&.id),
+      statement: event.query,
+      args: event.args
   end
 end
 

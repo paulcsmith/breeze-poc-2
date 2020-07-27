@@ -1,5 +1,5 @@
 class Fiber
-  property! breeze_request : BreezeRequest
+  property breeze_request : BreezeRequest?
 end
 
 abstract class BrowserAction < Lucky::Action
@@ -52,7 +52,7 @@ abstract class BrowserAction < Lucky::Action
   after store_breeze_response
 
   def store_breeze_response
-    req = Fiber.current.breeze_request
+    req = Fiber.current.breeze_request.not_nil!
     BreezeResponse::SaveOperation.create!(
       breeze_request_id: req.id,
       status: response.status_code,

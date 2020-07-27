@@ -26,6 +26,14 @@ class Breeze::Requests::ShowPage < BreezeLayout
         render_session_info
         render_header_info
       }
+
+    m Breeze::DescriptionList,
+      heading_title: ->{ text "Queries" },
+      list: ->{
+        req.breeze_sql_statements.each do |query|
+          m Breeze::DescriptionListRow, "Foo", query.statement
+        end
+      }
   end
 
   def render_session_info
