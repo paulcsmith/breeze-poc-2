@@ -8,9 +8,19 @@ class CreateBreezeRequests::V2 < Avram::Migrator::Migration::V1
       add path : String
       add method : String
       add action : String
+      add headers : JSON::Any
+      add body : String?
+      add session : JSON::Any
+    end
+
+    create table_for(BreezeResponse) do
+      primary_key id : Int64
+      add_timestamps
+
       add status : Int32
       add headers : JSON::Any
       add session : JSON::Any
+      add_belongs_to breeze_request : BreezeRequest, on_delete: :cascade
     end
 
     create table_for(BreezeSqlStatement) do
@@ -19,6 +29,13 @@ class CreateBreezeRequests::V2 < Avram::Migrator::Migration::V1
       add statement : String
       add args : String?
       add_belongs_to breeze_request : BreezeRequest?, on_delete: :nullify
+    end
+
+    create table_for(BreezePipe) do
+      primary_key id : Int64
+      add_timestamps
+      add name : String
+      add_belongs_to breeze_request : BreezeRequest, on_delete: :cascade
     end
   end
 

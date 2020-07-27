@@ -1,7 +1,8 @@
 class Breeze::Requests::Show < BreezeAction
   include Auth::AllowGuests
 
-  route do
-    html ShowPage, breeze_request: BreezeRequestQuery.find(request_id)
+  get "/breeze/requests/:request_id" do
+    requests = BreezeRequestQuery.new.preload_breeze_response.find(request_id)
+    html ShowPage, breeze_request: requests
   end
 end

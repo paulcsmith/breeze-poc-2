@@ -1,3 +1,7 @@
+class Fiber
+  property! breeze_request : BreezeRequest
+end
+
 abstract class BrowserAction < Lucky::Action
   include Lucky::ProtectFromForgery
   include Lucky::Paginator::BackendHelpers
@@ -29,18 +33,35 @@ abstract class BrowserAction < Lucky::Action
     UserQuery.new.id(id).first?
   end
 
-  after store_breeze
+  before store_breeze_request
 
-  def store_breeze : Continue
+  def store_breeze_request : Continue
     req = BreezeRequest::SaveOperation.create!(
       path: request.resource,
       method: request.method,
       action: self.class.name,
-      status: response.status_code,
+      body: request.body.try(&.to_s),
       session: JSON.parse(session.to_json),
       headers: JSON.parse(request.headers.to_h.to_json)
     )
-    # Lucky.logger.debug(debug_at: Breeze::Requests::Show.url(req.id))
+    Fiber.current.breeze_request = req
+    continue
+  end
+
+  after store_breeze_response
+
+  def store_breeze_response
+    req = Fiber.current.breeze_request
+    spawn do
+      BreezeResponse::SaveOperation.create!(
+
+        breeze_request_id: req.id,
+        status: response.status_code,
+        # session: JSON.parse(session.to_json),
+        headers: JSON.parse(response.headers.to_h.to_json)
+      )
+      Log.dexter.debug { {debug_at: Breeze::Requests::Show.url(req.id)} }
+    end
     continue
   end
 end

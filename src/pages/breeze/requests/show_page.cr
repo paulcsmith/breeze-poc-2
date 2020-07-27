@@ -19,7 +19,10 @@ class Breeze::Requests::ShowPage < BreezeLayout
       heading_title: ->{ text req.action },
       heading_subtitle: ->{ m Breeze::Badge, req },
       list: ->{
-        m Breeze::DescriptionListRow, "Status", req.status.to_s
+        req.breeze_response.try do |resp|
+          m Breeze::DescriptionListRow, "Status", resp.status.to_s
+        end
+        m Breeze::DescriptionListRow, "Body", req.body || "No body"
         render_session_info
         render_header_info
       }
