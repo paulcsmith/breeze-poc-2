@@ -44,6 +44,7 @@ abstract class BrowserAction < Lucky::Action
       session: JSON.parse(session.to_json),
       headers: JSON.parse(request.headers.to_h.to_json)
     )
+    Log.dexter.debug { {debug_at: Breeze::Requests::Show.url(req.id)} }
     Fiber.current.breeze_request = req
     continue
   end
@@ -58,7 +59,6 @@ abstract class BrowserAction < Lucky::Action
       session: JSON.parse(session.to_json),
       headers: JSON.parse(response.headers.to_h.to_json)
     )
-    Log.dexter.debug { {debug_at: Breeze::Requests::Show.url(req.id)} }
     continue
   end
 end
