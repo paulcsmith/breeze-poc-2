@@ -52,16 +52,13 @@ abstract class BrowserAction < Lucky::Action
 
   def store_breeze_response
     req = Fiber.current.breeze_request
-    spawn do
-      BreezeResponse::SaveOperation.create!(
-
-        breeze_request_id: req.id,
-        status: response.status_code,
-        # session: JSON.parse(session.to_json),
-        headers: JSON.parse(response.headers.to_h.to_json)
-      )
-      Log.dexter.debug { {debug_at: Breeze::Requests::Show.url(req.id)} }
-    end
+    BreezeResponse::SaveOperation.create!(
+      breeze_request_id: req.id,
+      status: response.status_code,
+      session: JSON.parse(session.to_json),
+      headers: JSON.parse(response.headers.to_h.to_json)
+    )
+    Log.dexter.debug { {debug_at: Breeze::Requests::Show.url(req.id)} }
     continue
   end
 end
