@@ -21,6 +21,6 @@ class Breeze::SidebarLinks < BaseComponent
   end
 
   def link_active_class
-    "bg-gray-900 text-white"
+    "bg-teal-600 text-white"
   end
 end

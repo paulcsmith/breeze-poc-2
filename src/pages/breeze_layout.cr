@@ -22,16 +22,14 @@ abstract class BreezeLayout
 
   def tailwind_stacked
     div "@keydown.window.escape": "sidebarOpen = false", x_data: "{ sidebarOpen: false }" do
-      div class: "bg-gray-800 pb-32" do
+      div class: "bg-gray-800 pb-32 pt-5" do
         nav class: "bg-gray-800" do
           div class: "max-w-7xl mx-auto sm:px-6 lg:px-8" do
-            div class: "border-b border-gray-700" do
-              div class: "flex items-center justify-between h-16 px-4 sm:px-0" do
-                div class: "flex items-center" do
-                  div class: "hidden md:block" do
-                    div class: "flex items-baseline" do
-                      m Breeze::SidebarLinks, context: context
-                    end
+            div class: "flex items-center justify-between h-16 px-4 sm:px-0" do
+              div class: "flex items-center" do
+                div class: "hidden md:block" do
+                  div class: "flex items-baseline" do
+                    m Breeze::SidebarLinks, context: context
                   end
                 end
                 hamburger_menu
@@ -41,18 +39,10 @@ abstract class BreezeLayout
 
           m Breeze::SmallSidebar, context: context
         end
-        header class: "py-10" do
-          div class: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" do
-            h1 class: "text-3xl leading-9 font-bold text-white" do
-              render_if_defined(:breadcrumb_parent)
-              text page_title
-            end
-          end
-        end
       end
       main class: "-mt-32" do
         div class: "max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8" do
-          div class: "bg-white rounded-lg shadow-lg overflow-hidden" do
+          div class: "mt-7 bg-white rounded-lg shadow-lg overflow-hidden" do
             m Shared::FlashMessages, @context.flash
             content
           end
