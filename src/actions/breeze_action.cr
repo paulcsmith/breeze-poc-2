@@ -1,6 +1,6 @@
 require "./browser_action"
 
-abstract class BreezeAction < BrowserAction
-  skip :store_breeze_request
-  skip :store_breeze_response
+abstract class BreezeAction < Lucky::Action
+  include Lucky::Paginator::BackendHelpers
+  accepted_formats [:html]
 end

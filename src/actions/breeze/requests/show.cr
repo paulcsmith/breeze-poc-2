@@ -1,6 +1,4 @@
 class Breeze::Requests::Show < BreezeAction
-  include Auth::AllowGuests
-
   get "/breeze/requests/:request_id" do
     requests = BreezeRequestQuery.new
       .preload_breeze_response
