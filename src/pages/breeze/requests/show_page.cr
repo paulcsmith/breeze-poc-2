@@ -18,7 +18,12 @@ class Breeze::Requests::ShowPage < BreezeLayout
     div class: "w-2/3" do
       m Breeze::Panel do
         m Breeze::DescriptionList,
-          heading_title: ->{ m Breeze::Badge, req, large: true },
+          heading_title: ->{
+            m Breeze::Badge, req, large: true
+            span class: "ml-3 font-normal text-base text-blue-800" do
+              text "about #{time_ago_in_words(req.created_at)} ago"
+            end
+          },
           list: ->{
             m Breeze::DescriptionListRow, "Action", req.action
             req.breeze_response.try do |resp|
