@@ -45,18 +45,14 @@ class Breeze::Requests::ShowPage < BreezeLayout
 
     m Breeze::Panel do
       m Breeze::DescriptionList,
-        heading_title: ->{ text "Header" },
-        list: ->{
-          render_header_info
-        }
-    end
-
-    m Breeze::Panel do
-      m Breeze::DescriptionList,
         heading_title: ->{ text "Queries" },
         list: ->{
-          req.breeze_sql_statements.each do |query|
-            m Breeze::DescriptionListRow, "Foo", query.statement
+          if req.breeze_sql_statements.any?
+            req.breeze_sql_statements.each do |query|
+              m Breeze::DescriptionListRow, "Foo", query.statement
+            end
+          else
+            para "No queries", class: "text-center text-gray-500 px-10 py-8 max-x-sm"
           end
         }
     end
@@ -68,6 +64,14 @@ class Breeze::Requests::ShowPage < BreezeLayout
           req.breeze_pipes.each do |pipe|
             m Breeze::DescriptionListRow, "Foo", pipe.name
           end
+        }
+    end
+
+    m Breeze::Panel do
+      m Breeze::DescriptionList,
+        heading_title: ->{ text "Header" },
+        list: ->{
+          render_header_info
         }
     end
   end
