@@ -4,6 +4,7 @@ class BreezeRequest < BaseModel
     column method : String
     column action : String
     column body : String?
+    column parsed_params : String
     column session : JSON::Any
     column headers : JSON::Any
     has_one breeze_response : BreezeResponse?

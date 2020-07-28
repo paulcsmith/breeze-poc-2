@@ -27,18 +27,26 @@ class Breeze::Requests::ShowPage < BreezeLayout
           list: ->{
             m Breeze::DescriptionListRow, "Action", req.action
             req.breeze_response.try do |resp|
-              m Breeze::DescriptionListRow, "Status", resp.status.to_s
+              m Breeze::DescriptionListRow, "Response Status", "#{resp.status.to_s} #{Wordsmith::Inflector.humanize(HTTP::Status.from_value?(resp.status))}"
             end
+            m Breeze::DescriptionListRow, "Request Body", req.body || "No body"
+            m Breeze::DescriptionListRow, "Request Params", req.parsed_params || "No params"
           }
       end
     end
 
     m Breeze::Panel do
       m Breeze::DescriptionList,
-        heading_title: ->{ text req.action },
+        heading_title: ->{ text "Session" },
         list: ->{
-          m Breeze::DescriptionListRow, "Body", req.body || "No body"
           render_session_info
+        }
+    end
+
+    m Breeze::Panel do
+      m Breeze::DescriptionList,
+        heading_title: ->{ text "Header" },
+        list: ->{
           render_header_info
         }
     end

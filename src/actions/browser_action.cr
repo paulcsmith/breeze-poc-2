@@ -40,6 +40,7 @@ abstract class BrowserAction < Lucky::Action
       method: request.method,
       action: self.class.name,
       body: request.body.try(&.to_s),
+      parsed_params: params.to_h.to_s,
       session: JSON.parse(session.to_json),
       headers: JSON.parse(request.headers.to_h.to_json)
     )

@@ -10,6 +10,7 @@ class CreateBreezeTables::V2 < Avram::Migrator::Migration::V1
       add action : String
       add headers : JSON::Any
       add body : String?
+      add parsed_params : String
       add session : JSON::Any
     end
 
