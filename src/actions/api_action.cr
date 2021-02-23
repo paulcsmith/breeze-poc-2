@@ -1,5 +1,6 @@
 # Include modules and add methods that are for all API requests
 abstract class ApiAction < Lucky::Action
+  include StoreBreeze
   accepted_formats [:json]
 
   include Api::Auth::Helpers

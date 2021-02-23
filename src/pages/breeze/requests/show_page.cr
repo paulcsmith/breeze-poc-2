@@ -30,7 +30,7 @@ class Breeze::Requests::ShowPage < BreezeLayout
               m Breeze::DescriptionListRow, "Response Status", "#{resp.status.to_s} #{Wordsmith::Inflector.humanize(HTTP::Status.from_value?(resp.status))}"
             end
             m Breeze::DescriptionListRow, "Request Body", req.body || "No body"
-            m Breeze::DescriptionListRow, "Request Params", req.parsed_params || "No params"
+            m Breeze::DescriptionListRow, "Request Params", req.parsed_params.to_s || "No params"
           }
       end
     end

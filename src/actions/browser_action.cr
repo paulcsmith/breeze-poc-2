@@ -1,9 +1,6 @@
-class Fiber
-  property breeze_request : BreezeRequest?
-end
-
 abstract class BrowserAction < Lucky::Action
-  before store_breeze_request
+  include StoreBreeze
+
   include Lucky::ProtectFromForgery
   include Lucky::Paginator::BackendHelpers
   accepted_formats [:html, :json], default: :html
@@ -32,33 +29,5 @@ abstract class BrowserAction < Lucky::Action
   # This method tells Authentic how to find the current user
   private def find_current_user(id) : User?
     UserQuery.new.id(id).first?
-  end
-
-  def store_breeze_request : Continue
-    req = BreezeRequest::SaveOperation.create!(
-      path: request.resource,
-      method: request.method,
-      action: self.class.name,
-      body: request.body.try(&.to_s),
-      parsed_params: params.to_h.to_s,
-      session: JSON.parse(session.to_json),
-      headers: JSON.parse(request.headers.to_h.to_json)
-    )
-    Log.dexter.debug { {debug_at: Breeze::Requests::Show.url(req.id)} }
-    Fiber.current.breeze_request = req
-    continue
-  end
-
-  after store_breeze_response
-
-  def store_breeze_response
-    req = Fiber.current.breeze_request.not_nil!
-    BreezeResponse::SaveOperation.create!(
-      breeze_request_id: req.id,
-      status: response.status_code,
-      session: JSON.parse(session.to_json),
-      headers: JSON.parse(response.headers.to_h.to_json)
-    )
-    continue
   end
 end

@@ -1,5 +1,9 @@
-class CreateBreezeTables::V2 < Avram::Migrator::Migration::V1
+class CreateBreezeTables::V3 < Avram::Migrator::Migration::V1
   def migrate
+    ["breeze_requests", "breeze_responses", "breeze_sql_statements", "breeze_pipes"].each do |table_name|
+      execute("DROP TABLE IF EXISTS #{table_name}")
+    end
+
     # Learn about migrations at: https://luckyframework.org/guides/database/migrations
     create table_for(BreezeRequest) do
       primary_key id : Int64
@@ -10,7 +14,7 @@ class CreateBreezeTables::V2 < Avram::Migrator::Migration::V1
       add action : String
       add headers : JSON::Any
       add body : String?
-      add parsed_params : String
+      add parsed_params : JSON::Any
       add session : JSON::Any
     end
 
@@ -36,12 +40,15 @@ class CreateBreezeTables::V2 < Avram::Migrator::Migration::V1
       primary_key id : Int64
       add_timestamps
       add name : String
+      add continued : Bool
       add_belongs_to breeze_request : BreezeRequest, on_delete: :cascade
     end
   end
 
   def rollback
     drop table_for(BreezeRequest)
+    drop table_for(BreezeResponse)
+    drop table_for(BreezePipe)
     drop table_for(BreezeSqlStatement)
   end
 end
