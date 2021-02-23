@@ -8,6 +8,7 @@
  */
 
 let mix = require("laravel-mix");
+let tailwindcss = require("tailwindcss")
 let plugins = [];
 
 // Customize the notifier to be less noisy
@@ -27,7 +28,7 @@ if (mix.inProduction()) {
   })
   plugins.push(gzipCompression)
 
-  // Add additional compression plugins here. 
+  // Add additional compression plugins here.
   // For example if you want to add Brotli compression:
   //
   // let brotliCompression = new CompressionWepackPlugin({
@@ -54,7 +55,10 @@ mix
     // https://github.com/tcoopman/image-webpack-loader
     imgLoaderOptions: { enabled: false },
     // Stops Mix from clearing the console when compilation succeeds
-    clearConsole: false
+    clearConsole: false,
+    // For Tailwind
+    processCssUrls: false,
+    postCss: [tailwindcss('./tailwind.config.js')],
   })
   // Set public path so manifest gets output here
   .setPublicPath("public")

@@ -16,10 +16,10 @@ abstract class AuthLayout
     html_doctype
 
     html lang: "en" do
-      m Shared::LayoutHead, page_title: page_title, context: context
+      m Shared::LayoutHead, page_title: page_title, context: @context
 
       body do
-        m Shared::FlashMessages, context.flash
+        m Shared::FlashMessages, @context.flash
         content
       end
     end

@@ -1,6 +1,10 @@
 class Home::Index < BrowserAction
   include Auth::AllowGuests
 
+  def current_user
+    nil
+  end
+
   get "/" do
     if current_user?
       redirect Me::Show

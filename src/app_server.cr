@@ -1,3 +1,16 @@
+class Lucky::DevelopmentChecks
+  include HTTP::Handler
+
+  def call(context : HTTP::Server::Context)
+    if Lucky::Env.development?
+      Avram::Migrator::Runner.new.ensure_migrated!
+      Avram::SchemaEnforcer.ensure_correct_column_mappings!
+    end
+
+    call_next(context)
+  end
+end
+
 class AppServer < Lucky::BaseAppServer
   # Learn about middleware with HTTP::Handlers:
   # https://luckyframework.org/guides/http-and-routing/http-handlers
@@ -7,6 +20,7 @@ class AppServer < Lucky::BaseAppServer
       Lucky::HttpMethodOverrideHandler.new,
       Lucky::LogHandler.new,
       Lucky::ErrorHandler.new(action: Errors::Show),
+      # Lucky::DevelopmentChecks.new,
       Lucky::RemoteIpHandler.new,
       Lucky::RouteHandler.new,
       Lucky::StaticCompressionHandler.new("./public", file_ext: "gz", content_encoding: "gzip"),

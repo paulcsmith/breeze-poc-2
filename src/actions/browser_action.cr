@@ -1,5 +1,8 @@
 abstract class BrowserAction < Lucky::Action
+  include StoreBreeze
+
   include Lucky::ProtectFromForgery
+  include Lucky::Paginator::BackendHelpers
   accepted_formats [:html, :json], default: :html
 
   # This module provides current_user, sign_in, and sign_out methods
